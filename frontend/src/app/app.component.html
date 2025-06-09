@@ -1,3 +1,39 @@
-<main class="main">
-  <h1>{{ title }}</h1>
+<!-- Header with title -->
+<header class="p-3 text-center border-bottom border-secondary">
+  <h2 class="mb-0">{{ title }}</h2>
+</header>
+
+<main class="d-flex flex-column justify-content-between" style="height: calc(100vh - 72px); padding: 2rem 30rem;">
+  <!-- Result area (top) -->
+  <section class="mb-3 flex-grow-1 overflow-auto">
+    <!-- This section will display the emotion analysis results -->
+     Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto doloremque sit pariatur rem, tenetur soluta esse! Sint doloremque libero iusto eius sequi laudantium, amet perspiciatis quibusdam cupiditate delectus laboriosam itaque.
+     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur eius earum maxime esse fugiat, facilis, asperiores error ut doloremque deserunt nemo ea? Aperiam sapiente deserunt soluta quisquam ea expedita maxime.
+     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, quo esse fugit, laboriosam corporis itaque consequatur odio eius dolorem provident perspiciatis incidunt culpa ratione natus quia! Tenetur sit reprehenderit illo!
+  </section>
+
+  <!-- Prompt input area (bottom) -->
+  <section class="mt-3">
+    <!-- Container with border wrapping textarea and button -->
+    <div class="bg-dark border border-secondary rounded p-2 d-flex flex-column">
+      <!-- Borderless textarea -->
+      <textarea
+        [(ngModel)]="prompt"
+        class="form-control bg-dark text-white border-0"
+        rows="5"
+        placeholder="Type your text here..."
+        style="resize:none; background-color: transparent; box-shadow: none;"
+      ></textarea>
+      <!-- Submit button below textarea -->
+      <button
+        (click)="submitPrompt()"
+        type="submit"
+        class="btn btn-primary align-self-end mt-2 rounded-circle d-flex justify-content-center align-items-center"
+        [style.visibility]="prompt && prompt.trim().length > 0 ? 'visible' : 'hidden'"
+        style="width: 40px; height: 40px;"
+      >
+        <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </section>
 </main>

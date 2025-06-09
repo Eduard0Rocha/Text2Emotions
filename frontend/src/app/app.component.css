@@ -1,1 +1,5 @@
-/* Empty for now */
+/* Style the textarea placeholder with Bootstrap gray, overriding Angular's encapsulation */
+:host ::ng-deep textarea::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+}
