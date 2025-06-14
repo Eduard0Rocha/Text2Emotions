@@ -7,9 +7,9 @@
   <!-- Result area (top) -->
   <section class="mb-3 flex-grow-1 overflow-auto">
     <!-- This section will display the emotion analysis results -->
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto doloremque sit pariatur rem, tenetur soluta esse! Sint doloremque libero iusto eius sequi laudantium, amet perspiciatis quibusdam cupiditate delectus laboriosam itaque.
-     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur eius earum maxime esse fugiat, facilis, asperiores error ut doloremque deserunt nemo ea? Aperiam sapiente deserunt soluta quisquam ea expedita maxime.
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, quo esse fugit, laboriosam corporis itaque consequatur odio eius dolorem provident perspiciatis incidunt culpa ratione natus quia! Tenetur sit reprehenderit illo!
+    <div *ngIf="highlightedText">
+      <p [innerHTML]="highlightedText"></p>
+    </div>
   </section>
 
   <!-- Prompt input area (bottom) -->

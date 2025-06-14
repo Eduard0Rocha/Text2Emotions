@@ -1,1 +1,8 @@
-/* Empty for now */
+/* Pastel background colors for emotion highlights */
+.bg-pastel-yellow { background-color: #FFF9C4; }   /* light pastel yellow */
+.bg-pastel-blue { background-color: #BBDEFB; }     /* light pastel blue */
+.bg-pastel-coral { background-color: #FFABAB; }    /* soft pastel coral */
+.bg-pastel-purple { background-color: #D1C4E9; }   /* soft pastel purple */
+.bg-pastel-green { background-color: #B2DFDB; }    /* pastel mint green */
+.bg-pastel-peach { background-color: #FFDAB9; }    /* pastel peach */
+.bg-pastel-gray { background-color: #ECEFF1; }     /* light pastel gray */
