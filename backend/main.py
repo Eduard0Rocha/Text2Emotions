@@ -5,10 +5,10 @@ from api.routes import router
 # Create the FastAPI application
 app = FastAPI()
 
-# Allow requests from the Angular frontend running on localhost:4200
+# Allow requests from the Angular frontend running on localhost:4200 (dev) or localhost:8080 (prod)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=["http://localhost:4200", "http://localhost:8080"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

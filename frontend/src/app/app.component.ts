@@ -20,6 +20,17 @@ export class AppComponent {
   emotionResults: any[] = [];
   // Processed HTML text with highlights
   highlightedText = '';
+  // Loading spinner visibility
+  isLoading = false;
+  // List of emotion names
+  emotionNames: string[] = [
+    'joy',
+    'sadness',
+    'anger',
+    'fear',
+    'disgust',
+    'surprise'
+  ];
 
   /**
    * Injects the HttpClient service to perform HTTP requests.
@@ -34,14 +45,24 @@ export class AppComponent {
     const url = 'http://localhost:8000/analyze/emotions'; // API endpoint
     const body = { text: this.prompt };                   // Request payload
 
+    // Show loading spinner
+    this.isLoading = true;
+
     this.http.post<any[]>(url, body).subscribe({
       next: (response) => {
         // Store response
         this.emotionResults = response;
         // Update highlighted text
         this.highlightedText = this.buildHighlightedText(this.prompt, response);
+        // Hide spinner after success
+        this.isLoading = false;
       },
-      error: (error) => console.error('Error:', error) // Log errors if any
+      error: (error) => {
+        // Log errors if any
+        console.error('Error:', error)
+        // Hide spinner on error
+        this.isLoading = false;
+      }
     });
   }
 
@@ -55,18 +76,17 @@ export class AppComponent {
   buildHighlightedText(originalText: string, emotions: any[]): string {
     let highlighted = originalText;
     for (const item of emotions) {
-      // Skip if no content to highlight
-      if (!item.content) continue;
+      // Skip if no content to highlight OR if the emotion is not recognized in the predefined list
+      if (!item.content ||
+          !this.emotionNames.includes(item.emotion)) continue;
       // Escape special regex characters in the content string
       const escaped = this.escapeRegex(item.content);
       // Create a global regex to find all occurrences of the content
       const regex = new RegExp(escaped, 'g');
-      // Get the CSS class based on the detected emotion
-      const cssClass = this.getEmotionClass(item.emotion);
-      // Replace all occurrences with a <span> that applies styling for the emotion
+      // Replace the matched text with a styled <span> using the emotion color
       highlighted = highlighted.replace(
         regex,
-        `<span class="rounded px-1 ${cssClass}">${item.content}</span>`
+        `<span class="rounded px-1 text-dark bg-${item.emotion}" title="${item.emotion}">${item.content}</span>`
       );
     }
     // Replace newlines with <br> tags to maintain line breaks in HTML output
@@ -81,31 +101,5 @@ export class AppComponent {
    */
   escapeRegex(text: string): string {
     return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
-
-  /**
-   * Maps an emotion string to a corresponding CSS class for styling.
-   *
-   * @param emotion The emotion label as a string (e.g., 'joy', 'sadness', etc.), or null.
-   * @returns A string with CSS classes for the emotion's background and text color.
-   */
-  getEmotionClass(emotion: string | null): string {
-    switch (emotion) {
-      case 'joy':
-        return 'bg-pastel-yellow text-dark'; // Soft pastel yellow background with dark text
-      case 'sadness':
-        return 'bg-pastel-blue text-dark';   // Light pastel blue background with dark text
-      case 'anger':
-        return 'bg-pastel-coral text-dark';  // Pastel coral background with dark text
-      case 'fear':
-        return 'bg-pastel-purple text-dark'; // Soft pastel purple background with dark text
-      case 'disgust':
-        return 'bg-pastel-green text-dark';  // Pastel mint green background with dark text
-      case 'surprise':
-        return 'bg-pastel-peach text-dark';  // Soft pastel peach background with dark text
-      case null:
-      default:
-        return '';                           // No styling (empty string) for unknown or null emotions
-    }
   }
 }
